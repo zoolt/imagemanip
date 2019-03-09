@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\Image\Test\Manipulations;
+namespace Zoolt\Image\Test\Manipulations;
 
-use Spatie\Image\Image;
-use Spatie\Image\Test\TestCase;
+use Zoolt\Image\Image;
+use Zoolt\Image\Test\TestCase;
 
 class GreyscaleTest extends TestCase
 {

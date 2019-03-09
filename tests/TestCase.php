@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Image\Test;
+namespace Zoolt\Image\Test;
 
 use Spatie\TemporaryDirectory\TemporaryDirectory;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;

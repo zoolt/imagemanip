@@ -1,10 +1,9 @@
 <?php
 
-namespace Spatie\Image\Test;
+namespace Zoolt\Image\Test;
 
-use Spatie\Image\Image;
-use Spatie\Image\Manipulations;
-use Intervention\Image\ImageManagerStatic as InterventionImage;
+use Zoolt\Image\Image;
+use Zoolt\Image\Manipulations;
 
 class ImageTest extends TestCase
 {
@@ -14,10 +13,7 @@ class ImageTest extends TestCase
         $targetFile = $this->tempDir->path('conversion.jpg');
 
         Image::load($this->getTestJpg())
-            ->manipulate(function (Manipulations $manipulations) {
-                $manipulations
-                    ->blur(50);
-            })
+            ->blur(50)
             ->save($targetFile);
 
         $this->assertFileExists($targetFile);
@@ -48,7 +44,9 @@ class ImageTest extends TestCase
         $this->assertImageType($targetFile, IMAGETYPE_GIF);
 
         $targetFile = $this->tempDir->path('conversion.jpg');
-        Image::load($this->getTestJpg())->save($targetFile);
+        Image::load($this->getTestJpg())
+            ->quality(30)
+            ->save($targetFile);
         $this->assertImageType($targetFile, IMAGETYPE_JPEG);
     }
 
@@ -68,18 +66,6 @@ class ImageTest extends TestCase
         $this->assertEquals(340, Image::load($this->getTestJpg())->getWidth());
 
         $this->assertEquals(280, Image::load($this->getTestJpg())->getHeight());
-    }
-
-    /** @test */
-    public function the_image_driver_is_set_on_the_intervention_static_manager()
-    {
-        $image = Image::load($this->getTestJpg());
-
-        $this->assertEquals('gd', InterventionImage::getManager()->config['driver'] ?? null);
-
-        $image->useImageDriver('imagick');
-
-        $this->assertEquals('imagick', InterventionImage::getManager()->config['driver'] ?? null);
     }
 
     protected function assertImageType(string $filePath, $expectedType)

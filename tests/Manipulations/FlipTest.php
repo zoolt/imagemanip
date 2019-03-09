@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Image\Test\Manipulations;
+namespace Zoolt\Image\Test\Manipulations;
 
-use Spatie\Image\Image;
-use Spatie\Image\Manipulations;
-use Spatie\Image\Test\TestCase;
+use Zoolt\Image\Image;
+use Zoolt\Image\Manipulations;
+use Zoolt\Image\Test\TestCase;
 
 class FlipTest extends TestCase
 {

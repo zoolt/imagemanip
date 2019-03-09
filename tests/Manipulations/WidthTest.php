@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Image\Test\Manipulations;
+namespace Zoolt\Image\Test\Manipulations;
 
-use Spatie\Image\Image;
-use Spatie\Image\Test\TestCase;
-use Spatie\Image\Exceptions\InvalidManipulation;
+use Zoolt\Image\Image;
+use Zoolt\Image\Test\TestCase;
+use Zoolt\Image\Exceptions\InvalidManipulation;
 
 class WidthTest extends TestCase
 {
@@ -16,6 +16,9 @@ class WidthTest extends TestCase
         Image::load($this->getTestJpg())->width(100)->save($targetFile);
 
         $this->assertFileExists($targetFile);
+
+        $w = Image::load($targetFile)->getWidth();
+        $this->assertEquals(100, $w);
     }
 
     /** @test */

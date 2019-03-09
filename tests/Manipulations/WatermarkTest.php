@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\Image\Test\Manipulations;
+namespace Zoolt\Image\Test\Manipulations;
 
-use Spatie\Image\Image;
-use Spatie\Image\Manipulations;
-use Spatie\Image\Test\TestCase;
-use League\Flysystem\FileNotFoundException;
-use Spatie\Image\Exceptions\InvalidManipulation;
+use Zoolt\Image\Image;
+use Zoolt\Image\Manipulations;
+use Zoolt\Image\Test\TestCase;
+use Zoolt\Image\Exceptions\FileNotFound;
+use Zoolt\Image\Exceptions\InvalidManipulation;
 
 class WatermarkTest extends TestCase
 {
@@ -25,7 +25,7 @@ class WatermarkTest extends TestCase
     /** @test */
     public function it_throws_an_exception_when_the_watermark_is_not_found()
     {
-        $this->expectException(FileNotFoundException::class);
+        $this->expectException(FileNotFound::class);
 
         $targetFile = $this->tempDir->path('conversion.jpg');
 
@@ -163,7 +163,6 @@ class WatermarkTest extends TestCase
         $targetFile = $this->tempDir->path('conversion.jpg');
 
         Image::load($this->getTestJpg())
-            ->useImageDriver('imagick')
             ->watermark($this->getTestFile('watermark.png'))
             ->watermarkOpacity(50)
             ->save($targetFile);
@@ -179,7 +178,6 @@ class WatermarkTest extends TestCase
         $targetFile = $this->tempDir->path('conversion.jpg');
 
         Image::load($this->getTestJpg())
-            ->useImageDriver('imagick')
             ->watermark($this->getTestFile('watermark.png'))
             ->watermarkOpacity(500)
             ->save($targetFile);

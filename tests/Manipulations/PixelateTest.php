@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Image\Test\Manipulations;
+namespace Zoolt\Image\Test\Manipulations;
 
-use Spatie\Image\Image;
-use Spatie\Image\Test\TestCase;
-use Spatie\Image\Exceptions\InvalidManipulation;
+use Zoolt\Image\Image;
+use Zoolt\Image\Test\TestCase;
+use Zoolt\Image\Exceptions\InvalidManipulation;
 
 class PixelateTest extends TestCase
 {

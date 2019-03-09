@@ -1,11 +1,11 @@
 <?php
 
-namespace Spatie\Image\Test\Manipulations;
+namespace Zoolt\Image\Test\Manipulations;
 
-use Spatie\Image\Image;
-use Spatie\Image\Manipulations;
-use Spatie\Image\Test\TestCase;
-use Spatie\Image\Exceptions\InvalidManipulation;
+use Zoolt\Image\Image;
+use Zoolt\Image\Manipulations;
+use Zoolt\Image\Test\TestCase;
+use Zoolt\Image\Exceptions\InvalidManipulation;
 
 class OrientationTest extends TestCase
 {

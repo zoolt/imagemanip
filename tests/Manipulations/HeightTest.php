@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Image\Test\Manipulations;
+namespace Zoolt\Image\Test\Manipulations;
 
-use Spatie\Image\Image;
-use Spatie\Image\Test\TestCase;
-use Spatie\Image\Exceptions\InvalidManipulation;
+use Zoolt\Image\Image;
+use Zoolt\Image\Test\TestCase;
+use Zoolt\Image\Exceptions\InvalidManipulation;
 
 class HeightTest extends TestCase
 {
@@ -16,6 +16,9 @@ class HeightTest extends TestCase
         Image::load($this->getTestJpg())->height(100)->save($targetFile);
 
         $this->assertFileExists($targetFile);
+
+        $h = Image::load($targetFile)->getHeight();
+        $this->assertEquals(100, $h);
     }
 
     /** @test */

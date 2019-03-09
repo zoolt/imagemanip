@@ -1,5 +1,6 @@
+/demo/*.jpg
 build
-composer.lock
+/composer.lock
 docs
-vendor
-tests/temp
+/vendor
+/tests/temp
