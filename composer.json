@@ -1,0 +1,47 @@
+{
+    "name": "zoolt/imagemanip",
+    "description": "Manipulate images in pure PHP",
+    "keywords": [
+        "zoolt",
+        "imagemanip",
+        "image",
+        "manipulation"
+    ],
+    "homepage": "https://git.zoolt.com/zoolt/imagemanip",
+    "license": "proprietairy",
+    "authors": [
+        {
+            "name": "Rik van der Heijden",
+            "email": "rik.vanderheijden@zoolt.com",
+            "homepage": "https://zoolt.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "ext-exif": "*",
+        "spatie/image-optimizer": "^1.0",
+        "spatie/temporary-directory": "^1.0.0"
+    },
+    "require-dev": {
+        "larapack/dd": "^1.1",
+        "phpunit/phpunit": "^6.0|^7.0",
+        "symfony/var-dumper": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zoolt\\Image\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zoolt\\Image\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true
+  }
+}
