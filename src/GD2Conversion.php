@@ -209,6 +209,30 @@ final class GD2Conversion
         $this->imageFilter($imageHandle, ['method' => IMG_FILTER_SMOOTH, 'arg1' => 1]);
     }
 
+    private function crop(&$imageHandle, $arguments)
+    {
+        $defaults = [
+            'width' => null,
+            'height' => null,
+            'gravity' => 'center',
+        ];
+        extract(array_merge($defaults, $arguments));
+        if ($gravity == 'center') {
+            $imageWidth = imagesx($imageHandle);
+            $imageHeight = imagesy($imageHandle);
+            $x = round(($imageWidth - $width) / 2);
+            $y = round(($imageHeight - $height) / 2);
+        } else {
+            throw new InvalidManipulation('invalid gravity');
+        }
+        $imageHandle = imagecrop($imageHandle, [
+            'x' => $x,
+            'y' => $y,
+            'width' => $width,
+            'height' => $height,
+        ]);
+    }
+
     private function imagefilter(&$imageHandle, $arguments)
     {
         $defaults = [
