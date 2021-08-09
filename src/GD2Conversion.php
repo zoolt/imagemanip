@@ -220,6 +220,12 @@ final class GD2Conversion
         if ($gravity == 'center') {
             $imageWidth = imagesx($imageHandle);
             $imageHeight = imagesy($imageHandle);
+            if ($height > $imageHeight) {
+                $height = $imageHeight;
+            }
+            if ($width > $imageWidth) {
+                $width = $imageWidth;
+            }
             $x = round(($imageWidth - $width) / 2);
             $y = round(($imageHeight - $height) / 2);
         } else {
