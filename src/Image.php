@@ -6,7 +6,10 @@ use Zoolt\Image\Exceptions\InvalidManipulation;
 
 class Image
 {
+    /** @var ?string */
     public $inputFile;
+    /** @var ?string */
+    public $imageData;
     private $manipulationChain = [];
     private $targetWidth = null;
     private $targetHeight = null;
@@ -15,9 +18,10 @@ class Image
     private $outputFormat = null;
     protected $background = array('r' => 255, 'g' => 255, 'b' => 255, 'a' => 0);
 
-    public function __construct($filename, $outputDir = null)
+    public function __construct($filename, $imageData)
     {
         $this->inputFile = $filename;
+        $this->imageData = $imageData;
     }
 
     /**
@@ -28,7 +32,18 @@ class Image
      */
     public static function load($filename)
     {
-        return new static($filename);
+        return new static($filename, null);
+    }
+
+    /**
+     * Load image and return new instance
+     *
+     * @param string $imageData image data as string
+     * @return Image instance
+     */
+    public static function loadString($imageData)
+    {
+        return new static(null, $imageData);
     }
 
     public function background($color)
@@ -345,7 +360,12 @@ class Image
             ]);
         }
 
-        $conv = GD2Conversion::create($this->inputFile)
+        if ($this->inputFile !== null) {
+            $converter = GD2Conversion::create($this->inputFile);
+        } else {
+            $converter = GD2Conversion::createFromString($this->imageData);
+        }
+        $converter
             ->background($this->background)
             ->performManipulations($this->manipulationChain)
             ->save($destination, $this->outputFormat);

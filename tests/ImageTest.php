@@ -20,6 +20,17 @@ class ImageTest extends TestCase
     }
 
     /** @test */
+    public function it_can_load_from_string()
+    {
+        $targetFile = $this->tempDir->path('conversionFromString.jpg');
+
+        Image::loadString(file_get_contents($this->getTestJpg()))
+            ->save($targetFile);
+
+        $this->assertFileExists($targetFile);
+    }
+
+    /** @test */
     public function it_can_modify_an_image_using_a_direct_manipulation_call()
     {
         $targetFile = $this->tempDir->path('conversion.jpg');

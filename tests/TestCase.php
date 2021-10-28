@@ -26,6 +26,6 @@ abstract class TestCase extends PHPUnitTestCase
 
     protected function getTestFile($fileName): string
     {
-        return __DIR__."/testfiles/{$fileName}";
+        return __DIR__ . "/testfiles/{$fileName}";
     }
 }

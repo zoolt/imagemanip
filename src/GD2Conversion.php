@@ -2,6 +2,7 @@
 
 namespace Zoolt\Image;
 
+use GdImage;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Zoolt\Image\Exceptions\CouldNotConvert;
 use Zoolt\Image\Exceptions\FileNotFound;
@@ -9,10 +10,13 @@ use Zoolt\Image\Exceptions\InvalidManipulation;
 
 final class GD2Conversion
 {
-    /** @var string */
+    /** @var ?string */
     private $inputImage;
 
-    /** @var string */
+    /** @var ?string */
+    private $imageData;
+
+    /** @var GdImage */
     private $conversionResult = null;
 
     private $quality = 90;
@@ -25,12 +29,18 @@ final class GD2Conversion
 
     public static function create(string $inputImage): self
     {
-        return new self($inputImage);
+        return new self($inputImage, null);
     }
 
-    public function __construct(string $inputImage)
+    public static function createFromString(?string $imageData): self
+    {
+        return new self(null, $imageData);
+    }
+
+    public function __construct(?string $inputImage, ?string $imageData)
     {
         $this->inputImage = $inputImage;
+        $this->imageData = $imageData;
     }
 
     private function imageCreateFromMime($filePath)
@@ -81,7 +91,7 @@ final class GD2Conversion
             default:
                 break;
         }
-        throw FileNotFound::invalidType($filePath);
+        throw FileNotFound::invalidType($extension);
     }
 
     private function should($manipulationName)
@@ -104,19 +114,24 @@ final class GD2Conversion
 
     public function performManipulations($manipulations)
     {
-        if (!file_exists($this->inputImage)) {
-            throw FileNotFound::nonExisting($this->inputImage);
-        }
         $this->manipulations = $manipulations;
-
         $this->shouldOptimize = false;
-        $extension = strtolower(pathinfo($this->inputImage, PATHINFO_EXTENSION));
-        if (!empty($extension)) {
-            $f = $this->imageCreateFunction($extension);
+
+        if ($this->inputImage) {
+            if (!file_exists($this->inputImage)) {
+                throw FileNotFound::nonExisting($this->inputImage);
+            }
+            $extension = strtolower(pathinfo($this->inputImage, PATHINFO_EXTENSION));
+            if (!empty($extension)) {
+                $f = $this->imageCreateFunction($extension);
+            } else {
+                $f = $this->imageCreateFromMime($this->inputImage);
+            }
+            $img = \call_user_func($f, $this->inputImage);
         } else {
-            $f = $this->imageCreateFromMime($this->inputImage);
+            $f = null;
+            $img = imagecreatefromstring($this->imageData);
         }
-        $img = \call_user_func($f, $this->inputImage);
 
         // If we need scaling, do this first to speed up orientation
         if ($this->should('scale')) {
@@ -150,7 +165,12 @@ final class GD2Conversion
 
     private function autoOrientation(&$img)
     {
-        $exif = exif_read_data($this->inputImage);
+        if ($this->inputImage) {
+            $exif = exif_read_data($this->inputImage);
+        } else {
+            // see https://stackoverflow.com/questions/5465665/extract-exif-data-from-an-image-blob-binary-string-in-php
+            $exif = exif_read_data("data://image/jpeg;base64," . base64_encode($this->imageData));
+        }
         $rot = $exif['Orientation'] ?? $exif['COMPUTED']['Orientation'] ?? null;
         switch ($rot) {
             case 3: // 180 degrees

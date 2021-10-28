@@ -14,17 +14,9 @@ class CropTest extends TestCase
     {
         $targetFile = $this->tempDir->path('conversion.jpg');
 
-        Image::load($this->getTestJpg())->crop(Manipulations::CROP_BOTTOM, 100, 500)->save($targetFile);
+        Image::load($this->getTestJpg())->crop(100, 500)->save($targetFile);
 
         $this->assertFileExists($targetFile);
-    }
-
-    /** @test */
-    public function it_will_throw_an_exception_when_passing_an_invalid_crop_method()
-    {
-        $this->expectException(InvalidManipulation::class);
-
-        Image::load($this->getTestJpg())->crop('blabla', 10, 10);
     }
 
     /** @test */
@@ -32,7 +24,7 @@ class CropTest extends TestCase
     {
         $this->expectException(InvalidManipulation::class);
 
-        Image::load($this->getTestJpg())->crop(Manipulations::CROP_BOTTOM, -10, 10);
+        Image::load($this->getTestJpg())->crop(-10, 10);
     }
 
     /** @test */
@@ -40,6 +32,6 @@ class CropTest extends TestCase
     {
         $this->expectException(InvalidManipulation::class);
 
-        Image::load($this->getTestJpg())->crop(Manipulations::CROP_BOTTOM, 10, -10);
+        Image::load($this->getTestJpg())->crop(10, -10);
     }
 }
