@@ -4,3 +4,4 @@ build
 docs
 /vendor
 /tests/temp
+/.phpunit.result.cache

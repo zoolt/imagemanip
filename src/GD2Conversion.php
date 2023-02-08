@@ -408,14 +408,14 @@ final class GD2Conversion
         imagecopyresampled(
             $newImg,
             $imageHandle,
-            $paddingLeft,
-            $paddingTop,
+            (int)$paddingLeft,
+            (int)$paddingTop,
             0,
             0,
-            $targetWidth,
-            $targetHeight,
-            $width,
-            $height
+            (int)$targetWidth,
+            (int)$targetHeight,
+            (int)$width,
+            (int)$height
         );
         imagedestroy($imageHandle);
         $imageHandle = $newImg;
