@@ -43,6 +43,17 @@ final class GD2Conversion
         $this->imageData = $imageData;
     }
 
+    public static function isTypeSupported(string $mimeTypeOrExtension): bool
+    {
+        return in_array(
+            $mimeTypeOrExtension,
+            [
+                'image/png', 'image/bmp', 'image/vnd.wap.wbmp', 'image/gif', 'image/webp', 'image/xbm', 'image/xpm',
+                'image/jpeg', 'image/jpg', 'png', 'bmp', 'wbmp', 'gif', 'webp', 'xbm', 'xpm', 'jpeg', 'jpg'
+            ]
+        );
+    }
+
     private function imageCreateFromMime($filePath)
     {
         $mime = mime_content_type($filePath);

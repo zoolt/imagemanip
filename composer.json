@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^7.0|^8.0",
+        "php": "^8.0",
         "ext-exif": "*",
         "ext-gd": "*",
         "spatie/image-optimizer": "^1.0"

@@ -66,6 +66,11 @@ class Image
         return $this;
     }
 
+    public static function isTypeSupported(string $mimeTypeOrExtension): bool
+    {
+        return GD2Conversion::isTypeSupported($mimeTypeOrExtension);
+    }
+
     /**
      * Optimize the image
      *
