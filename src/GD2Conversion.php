@@ -138,10 +138,10 @@ final class GD2Conversion
             } else {
                 $f = $this->imageCreateFromMime($this->inputImage);
             }
-            $img = \call_user_func($f, $this->inputImage);
+            $img = @\call_user_func($f, $this->inputImage);
         } else {
             $f = null;
-            $img = imagecreatefromstring($this->imageData);
+            $img = @imagecreatefromstring($this->imageData);
         }
 
         // If we need scaling, do this first to speed up orientation
